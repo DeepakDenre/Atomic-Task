@@ -1,0 +1,54 @@
+# Build directories
+/target/
+/build/
+/out/
+/bin/
+
+# Maven specific
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Gradle specific
+.gradle/
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+.metadata/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Spring Boot devtools
+.spring-boot-devtools.properties
+
+# Environment files
+.env
+*.env
+
+# Optional: exclude template or static resources if generated
+/resources/static/
+/resources/templates/
+/templates/
+/static/
+/public/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+

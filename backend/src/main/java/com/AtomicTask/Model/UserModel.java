@@ -58,4 +58,9 @@ public class UserModel {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
+	@Override
+	public String toString() {
+		return "UUID:"+this.uuid+"\nEmail: "+this.email+"\nUsername: "+this.username+"\nFirst Name: "+this.firstName+"\nLast Name: "+this.lastName+"\n Hashed Password: "+this.hashedPassword+"\nRole :"+this.role;
+	}
 }

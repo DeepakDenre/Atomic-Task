@@ -35,10 +35,10 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 			String header = req.getHeader("Authorization");
 			if( header != null && header.startsWith("Bearer ")) {
 				String Token = header.substring(7);
-				String username = JwtUtils.getUsernameFromToken(Token);
+				String username = JwtUtils.getUsernameFromAccessToken(Token);
 				if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 					UserModel user = userRepo.findByUsername(username);
-					if(JwtUtils.validateToken(Token)) {
+					if(JwtUtils.validateAccessToken(Token)) {
 						List<GrantedAuthority> authorities = Collections.singletonList(
 							    new SimpleGrantedAuthority("ROLE_" + user.getRole()));
 						UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user,null,authorities);

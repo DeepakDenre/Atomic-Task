@@ -1,8 +1,7 @@
 package com.AtomicTask.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +16,7 @@ import com.AtomicTask.Model.OtpModel;
 import com.AtomicTask.Model.UserModel;
 import com.AtomicTask.Repository.OtpRepository;
 import com.AtomicTask.Repository.UserRepository;
+import com.AtomicTask.Security.EncryptionUtils;
 import com.AtomicTask.Security.JWTUtils;
 
 @Service
@@ -43,10 +43,10 @@ public class OtpService {
 	
 	public String generateOtp(OtpReq req) {
 		try {
-			String otpString = String.format("%06d", new Random().nextInt(999999));
+			String otpString = String.format("%06d", new SecureRandom().nextInt(999999));
 			OtpModel otp = new OtpModel();
 			otp.setEmail(req.getEmail());
-			otp.setOtp(otpString);
+			otp.setOtp(EncryptionUtils.encrypt(otpString));
 			otp.setExpiresAt(LocalDateTime.now().plusMinutes(OtpExpiry));
 			otpRepo.save(otp);
 			return otpString;
@@ -62,51 +62,46 @@ public class OtpService {
 			if("otp".equalsIgnoreCase(req.getSignInMethod())) {
 				OtpModel otp = otpRepo.findById(req.getEmail()).get();
 				if(otp != null) {
-					if(req.getOTP().equalsIgnoreCase(otp.getOtp())) {
+					if(req.getOTP().equals(otp.getOtp())) {
 						if(otp.getExpiresAt().isAfter(LocalDateTime.now())) {
 							UserModel user = userRepo.findByEmail(req.getEmail());
 							resp.setMessage("Otp Signin Successfull");
-							resp.setToken(jwt.generateToken(user));
+							resp.setAccessToken(jwt.generateAccessToken(user));
+							resp.setRefreshToken(jwt.generateRefreshToken(user));
+							
+							// Delete the otp from the database after validation as the user now whas the Access and refresh token for auth
 							otpRepo.deleteById(req.getEmail());
 							return ResponseEntity.status(HttpStatus.OK).body(resp);
 						}else {
 							resp.setMessage("Expired Otp");
-							resp.setToken("");
+							resp.setAccessToken("");
+							resp.setRefreshToken("");
 							return ResponseEntity.status(HttpStatus.CONFLICT).body(resp);
 						}
 					}else {
 						resp.setMessage("Invalid Otp");
-						resp.setToken("");
+						resp.setAccessToken("");
+						resp.setRefreshToken("");
 						return ResponseEntity.status(HttpStatus.CONFLICT).body(resp);
 					}
 				}else {
 					resp.setMessage("generate otp first");
-					resp.setToken("");
+					resp.setAccessToken("");
+					resp.setRefreshToken("");
 					return ResponseEntity.status(HttpStatus.CONFLICT).body(resp);
 				}
 			}else {
 				resp.setMessage("signInMethod is not otp");
-				resp.setToken("");
+				resp.setAccessToken("");
+				resp.setRefreshToken("");
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(resp);
 			}
 		}catch (Exception e) {
 			SignInResp resp = new SignInResp();
 			resp.setMessage("Error: "+e);
-			resp.setToken("");
+			resp.setAccessToken("");
+			resp.setRefreshToken("");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp);
-		}
-	}
-	
-	public void destroyOtp(SignInReq req) {
-		try {
-			if("otp".equalsIgnoreCase(req.getSignInMethod())) {
-				OtpModel otp = otpRepo.findById(req.getEmail()).get();
-				if(otp != null) {
-					otpRepo.deleteById(req.getEmail());
-				}
-			}
-		}catch (Exception e) {
-			System.out.println("Error destroying otp : "+e);
 		}
 	}
 }

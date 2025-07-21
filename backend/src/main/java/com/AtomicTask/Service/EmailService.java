@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.AtomicTask.DTO.OtpReq;
+import com.AtomicTask.DTO.OtpResp;
 import com.AtomicTask.Model.UserModel;
 import com.AtomicTask.Repository.UserRepository;
 
@@ -25,9 +26,10 @@ public class EmailService {
 	@Autowired
 	JavaMailSender mailSender;
 	
-	public ResponseEntity<String> sendOtp(OtpReq req) {
+	public ResponseEntity<OtpResp> sendOtp(OtpReq req) {
 		try {
 			UserModel user = userRepo.findByEmail(req.getEmail());
+			OtpResp resp = new OtpResp();
 			if(user != null) {
 				MimeMessage message = mailSender.createMimeMessage();
 				MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -37,12 +39,16 @@ public class EmailService {
 				helper.setSubject(subject);
 				helper.setText(htmlContent, true);
 				mailSender.send(message);
-				return ResponseEntity.status(HttpStatus.OK).body("Otp Sent to your Email");
+				resp.setMessage("Otp Sent to your Email");
+				return ResponseEntity.status(HttpStatus.OK).body(resp);
 			}else {
-				return ResponseEntity.status(HttpStatus.CONFLICT).body("email not registered");
+				resp.setMessage("email not registered");
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resp);
 			}
 		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Otp generation failed");
+			OtpResp resp = new OtpResp();
+			resp.setMessage("Otp generation failed");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp);
 		}
 	}
 	

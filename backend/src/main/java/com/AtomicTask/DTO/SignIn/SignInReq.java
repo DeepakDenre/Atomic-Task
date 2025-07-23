@@ -1,4 +1,4 @@
-package com.AtomicTask.DTO;
+package com.AtomicTask.DTO.SignIn;
 
 public class SignInReq {
 	private String email;

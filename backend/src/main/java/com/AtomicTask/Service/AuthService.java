@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.http.HttpHeaders;
 
-import com.AtomicTask.DTO.RefreshReq;
-import com.AtomicTask.DTO.RefreshResp;
-import com.AtomicTask.DTO.SignInReq;
-import com.AtomicTask.DTO.SignInResp;
-import com.AtomicTask.DTO.SignUpReq;
-import com.AtomicTask.DTO.SignUpResp;
+import com.AtomicTask.DTO.Refresh.RefreshReq;
+import com.AtomicTask.DTO.Refresh.RefreshResp;
+import com.AtomicTask.DTO.SignIn.SignInReq;
+import com.AtomicTask.DTO.SignIn.SignInResp;
+import com.AtomicTask.DTO.SignUp.SignUpReq;
+import com.AtomicTask.DTO.SignUp.SignUpResp;
 import com.AtomicTask.Model.UserModel;
 import com.AtomicTask.Repository.UserRepository;
 import com.AtomicTask.Utlity.EncryptionUtils;

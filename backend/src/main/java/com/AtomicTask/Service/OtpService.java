@@ -11,9 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.AtomicTask.Config.EnvConfig;
-import com.AtomicTask.DTO.OtpReq;
-import com.AtomicTask.DTO.SignInReq;
-import com.AtomicTask.DTO.SignInResp;
+import com.AtomicTask.DTO.OTP.OtpReq;
+import com.AtomicTask.DTO.SignIn.SignInReq;
+import com.AtomicTask.DTO.SignIn.SignInResp;
 import com.AtomicTask.Model.OtpModel;
 import com.AtomicTask.Model.UserModel;
 import com.AtomicTask.Repository.OtpRepository;

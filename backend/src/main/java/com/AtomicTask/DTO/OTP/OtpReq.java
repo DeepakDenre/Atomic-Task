@@ -1,4 +1,4 @@
-package com.AtomicTask.DTO;
+package com.AtomicTask.DTO.OTP;
 
 public class OtpReq {
 	private String email;

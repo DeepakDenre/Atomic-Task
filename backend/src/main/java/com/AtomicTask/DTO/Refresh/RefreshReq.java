@@ -1,4 +1,4 @@
-package com.AtomicTask.DTO;
+package com.AtomicTask.DTO.Refresh;
 
 public class RefreshReq {
 	private String refreshToken;

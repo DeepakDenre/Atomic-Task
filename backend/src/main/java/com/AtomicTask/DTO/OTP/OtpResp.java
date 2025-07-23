@@ -1,4 +1,4 @@
-package com.AtomicTask.DTO;
+package com.AtomicTask.DTO.OTP;
 
 public class OtpResp {
 	private String message;

@@ -7,8 +7,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.AtomicTask.DTO.OtpReq;
-import com.AtomicTask.DTO.OtpResp;
+import com.AtomicTask.DTO.OTP.OtpReq;
+import com.AtomicTask.DTO.OTP.OtpResp;
 import com.AtomicTask.Model.UserModel;
 import com.AtomicTask.Repository.UserRepository;
 

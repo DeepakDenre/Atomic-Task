@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.AtomicTask.DTO.OtpReq;
-import com.AtomicTask.DTO.OtpResp;
-import com.AtomicTask.DTO.RefreshReq;
-import com.AtomicTask.DTO.RefreshResp;
-import com.AtomicTask.DTO.SignInReq;
-import com.AtomicTask.DTO.SignInResp;
-import com.AtomicTask.DTO.SignUpReq;
-import com.AtomicTask.DTO.SignUpResp;
+import com.AtomicTask.DTO.OTP.OtpReq;
+import com.AtomicTask.DTO.OTP.OtpResp;
+import com.AtomicTask.DTO.Refresh.RefreshReq;
+import com.AtomicTask.DTO.Refresh.RefreshResp;
+import com.AtomicTask.DTO.SignIn.SignInReq;
+import com.AtomicTask.DTO.SignIn.SignInResp;
+import com.AtomicTask.DTO.SignUp.SignUpReq;
+import com.AtomicTask.DTO.SignUp.SignUpResp;
 import com.AtomicTask.Service.AuthService;
 import com.AtomicTask.Service.EmailService;
 
